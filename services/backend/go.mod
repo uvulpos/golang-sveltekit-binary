@@ -70,7 +70,7 @@ require (
 )
 
 require (
-	github.com/go-sqlx/sqlx v1.3.7
+	github.com/go-sqlx/sqlx v1.3.8
 	github.com/go-webauthn/webauthn v0.10.1
 )
 
