@@ -5,11 +5,17 @@
 dev: .install-deps ## start debugging in docker compose microservices (auto reload)
 	@docker compose -f compose-dev.yaml up --abort-on-container-exit backend frontend reverse-proxy
 
+uilib:
+	@(cd services/ui-lib ; npm run storybook)
+
 build-full: .install-deps ## build current plattform
 	@bash ./devops/scripts/build-service/binary.sh
 
 local-release: .install-deps ## build all app versions locally (via goreleaser)
 	@bash  ./devops/scripts/utils/local-release.sh
+
+storybook:
+	@(cd services/frontend ; npm run storybook)
 
 test-be: ## run golang tests
 	@docker compose -f compose-dev.yaml up --abort-on-container-exit postgres backend-tests

@@ -1,36 +1,36 @@
 {
-    "name": "frontend",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "dev": "vite dev --host",
-        "build": "vite build",
-        "preview": "vite preview",
-        "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-    },
-    "devDependencies": {
-        "@macfja/svelte-multi-adapter": "^1.0.2",
-        "@sveltejs/adapter-auto": "^3.1.1",
-        "@sveltejs/adapter-static": "^3.0.1",
-        "@sveltejs/kit": "^2.5.7",
-        "@sveltejs/vite-plugin-svelte": "^3.0.2",
-        "@types/throttle-debounce": "^5.0.2",
-        "sass": "^1.71.1",
-        "svelte": "^4.2.12",
-        "svelte-check": "^3.6.9",
-        "svelte-loading-spinners": "^0.3.4",
-        "tslib": "^2.4.1",
-        "typescript": "^5.4.5",
-        "vite": "^5.1.7"
-    },
-    "type": "module",
-    "dependencies": {
-        "@fontsource/inter": "^5.0.17",
-        "@types/js-cookie": "^3.0.6",
-        "cookies": "^0.9.1",
-        "js-cookie": "^3.0.5",
-        "svelte-i18n": "^4.0.0",
-        "throttle-debounce": "^5.0.0"
-    }
+  "name": "frontend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@macfja/svelte-multi-adapter": "^1.0.2",
+    "@sveltejs/adapter-auto": "^3.1.1",
+    "@sveltejs/adapter-static": "^3.0.1",
+    "@sveltejs/kit": "^2.5.7",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@types/throttle-debounce": "^5.0.2",
+    "sass": "^1.71.1",
+    "svelte": "^4.2.12",
+    "svelte-check": "^3.6.9",
+    "svelte-loading-spinners": "^0.3.4",
+    "tslib": "^2.4.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.1.7"
+  },
+  "type": "module",
+  "dependencies": {
+    "@fontsource/inter": "^5.0.17",
+    "@types/js-cookie": "^3.0.6",
+    "cookies": "^0.9.1",
+    "js-cookie": "^3.0.5",
+    "svelte-i18n": "^4.0.0",
+    "throttle-debounce": "^5.0.0"
+  }
 }
