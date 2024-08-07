@@ -13,6 +13,7 @@
     Navbar,
     Header,
     SvelteUIProvider,
+    theme,
   } from "@svelteuidev/core";
   import { allowedLanguages, getLocale } from "$lib/i18n";
   import { Header as PageHeader } from "$lib/components/Header";
@@ -45,6 +46,7 @@
   onMount(() => {
     preMount = false;
     bodyElement = document.body;
+    themeStore.isThemeSetOrAutoDetect(window);
   });
 
   $: {
@@ -77,11 +79,7 @@
 <style lang="sass">
   @import "$lib/theme/variables.scss"
   
-<<<<<<< Updated upstream
-  body
-=======
   :global(body)
->>>>>>> Stashed changes
       background: var(--background-color)
       color: var(--font-color)
 
@@ -97,13 +95,8 @@
       margin-top: var(--topbar-height) 
 
       color: var(--sidebar-font-color)
-<<<<<<< Updated upstream
-      background-color: var(--sidebar-background-color) 
-=======
       background-color: var(--sidebar-background-color)
       border: none
->>>>>>> Stashed changes
-
       box-sizing: border-box
       font-size: 0.9em
 

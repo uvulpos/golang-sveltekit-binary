@@ -17,12 +17,22 @@ import (
 	"github.com/uvulpos/go-svelte/src/configuration"
 	dbHelper "github.com/uvulpos/go-svelte/src/helper/database"
 
+	authHttp "github.com/uvulpos/go-svelte/src/resources/auth/http"
+	authSvc "github.com/uvulpos/go-svelte/src/resources/auth/service"
+
 	generalHttp "github.com/uvulpos/go-svelte/src/resources/general/http"
 	generalService "github.com/uvulpos/go-svelte/src/resources/general/service"
 	generalStorage "github.com/uvulpos/go-svelte/src/resources/general/storage"
+
+	authPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/service"
+	authPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/auth/storage"
+
+	jwtPackageService "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/service"
+	jwtPackageStorage "github.com/uvulpos/go-svelte/authentication-api/ressources/jwt/storage"
 )
 
 type App struct {
+	AuthHandler    AuthHandler
 	GeneralHandler GeneralHandler
 }
 
@@ -37,21 +47,43 @@ func NewApp() *App {
 		return nil
 	}
 
+	jwtPackageStorage := jwtPackageStorage.NewJwtStorage(dbConn)
+	jwtPackageSvc := jwtPackageService.NewJwtService(jwtPackageStorage, "somethingNice")
+
+	authPackageStore := authPackageStorage.NewAuthStorage(dbConn)
+	authPackageSvc := authPackageService.NewAuthService(
+		authPackageStore,
+		configuration.AUTHORIZATION_OAUTH_KEY,
+		configuration.AUTHORIZATION_OAUTH_SECRET,
+		configuration.AUTHORIZATION_OAUTH_CALLBACK_URL,
+		configuration.AUTHORIZATION_OAUTH_AUTHORIZATION_URL,
+		configuration.AUTHORIZATION_OAUTH_TOKEN_URL,
+		configuration.AUTHORIZATION_OAUTH_USERINFO_URL,
+		configuration.AUTHORIZATION_OAUTH_LOGOUT_URL,
+		configuration.AUTHORIZATION_OAUTH_SCOPES...,
+	)
+
+	authService := authSvc.NewAuthService(authPackageSvc, jwtPackageSvc)
+	authHandler := authHttp.NewAuthHandler(authService)
+
 	generalStore := generalStorage.NewGeneralStore(dbConn)
 	generalSvc := generalService.NewGeneralSvc(generalStore)
 	generalHandler := generalHttp.NewGeneralHandler(generalSvc)
 
 	return &App{
+		AuthHandler:    authHandler,
 		GeneralHandler: generalHandler,
 	}
 }
 
-// @title			Golang + SvelteKit API
-// @version		1.0
+// @title		Golang + SvelteKit API
+// @version	1.0
+// @description
+// @description	<img alt="coffee drinking gopher" src="/api/asset/gopher-coffee" height="200px">
+// @description
 // @description	This is a sample swagger for this template
-//
-// @contact.name Return to
-// @contact.url	/
+// @description
+// @description	[Return back to application](/) // [View on GitHub](https://github.com/uvulpos/golang-sveltekit-binary)
 //
 // @host			web.localhost
 // @BasePath		/
@@ -87,8 +119,14 @@ func (a *App) RunApp() {
 
 	router.Use(Handle404)
 
+	// tlsCert, err := tls.X509KeyPair(certificatePEM, privateKeyPEM)
+	// if err != nil {
+	// 	panic("Fehler beim Erstellen des tls.Certificate:" + err.Error())
+	// }
+
 	serverPort := fmt.Sprintf(":%d", configuration.WEBSERVER_PORT)
 	err = router.Listen(serverPort)
+	// err = router.ListenTLSWithCertificate(serverPort, tlsCert)
 	if err != nil {
 		panic(err)
 	}
